@@ -1,0 +1,75 @@
+name: Build Android APK
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    env:
+      ANDROID_HOME: /usr/local/lib/android/sdk
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install NPM Dependencies
+        run: npm install --legacy-peer-deps --no-audit --no-fund
+
+      - name: Build Web Dist
+        run: npm run build
+
+      - name: Sync Capacitor Android
+        run: npx cap sync android
+
+      - name: Make Gradle Executable
+        run: chmod +x android/gradlew
+
+      - name: Build Debug APK
+        run: cd android && ./gradlew assembleDebug --no-daemon
+
+      - name: Copy and Rename APK
+        run: |
+          mkdir -p release_apk
+          cp android/app/build/outputs/apk/debug/app-debug.apk release_apk/FF_SensiPro_v4.9_VIP.apk
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FF_SensiPro_v4.9_VIP_APK
+          path: release_apk/FF_SensiPro_v4.9_VIP.apk
+          retention-days: 30
+
+      - name: Create or Update GitHub Release with APK
+        uses: softprops/action-gh-release@v2
+        if: github.ref == 'refs/heads/main'
+        with:
+          tag_name: v4.9.0
+          name: 'FF SensiPro VIP v4.9.0 APK Release'
+          body: |
+            ### 👑 Free Fire VIP Sensi & Headshot Panel v4.9.0
+            - Direct Android APK installation package
+            - 100% Anti-Ban, safe DPI & touch latency optimizer
+            - Real-time 3D Hologram aim matrix & floating panel overlay
+          files: release_apk/FF_SensiPro_v4.9_VIP.apk
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

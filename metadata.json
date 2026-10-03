@@ -1,0 +1,6 @@
+{
+  "name": "FF SensiPro - Device Sensitivity & Headshot Calculator",
+  "description": "Calculate exact Free Fire in-game sensitivity, fire button size, safe DPI, and pointer speed customized for your phone model, RAM, and playstyle.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

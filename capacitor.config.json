@@ -1,0 +1,15 @@
+{
+  "appId": "com.ffsensipro.headshotengine",
+  "appName": "FF SensiPro A-Z Engine",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#09090b"
+    }
+  }
+}
