@@ -16,12 +16,14 @@ import {
   Volume2,
   Sparkles,
   Sliders,
+  Bot,
 } from 'lucide-react';
 import { SensiScale } from '../types/sensi';
 import { soundFx } from '../utils/audioEffects';
 
 export type NavTabType =
   | 'calculator'
+  | 'aibot'
   | 'ffsettings'
   | 'vippanel'
   | 'headshot90'
@@ -91,6 +93,18 @@ export const Navbar: React.FC<NavbarProps> = ({
             }`}
           >
             Calculator
+          </button>
+
+          <button
+            onClick={() => setActiveTab('aibot')}
+            className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all whitespace-nowrap flex items-center gap-1.5 ${
+              activeTab === 'aibot'
+                ? 'bg-gradient-to-r from-red-600 via-rose-600 to-amber-500 text-white border border-amber-300 shadow-md shadow-red-500/30'
+                : 'text-red-400 hover:text-red-300 hover:bg-zinc-900 border border-red-500/30'
+            }`}
+          >
+            <Bot className="w-3.5 h-3.5 text-red-400" />
+            <span>🤖 AI Bot Match</span>
           </button>
 
           <button
@@ -359,6 +373,17 @@ export const Navbar: React.FC<NavbarProps> = ({
           }`}
         >
           Calculator
+        </button>
+        <button
+          onClick={() => setActiveTab('aibot')}
+          className={`px-2.5 py-1 rounded-lg text-xs whitespace-nowrap font-black flex items-center gap-1 ${
+            activeTab === 'aibot'
+              ? 'bg-gradient-to-r from-red-600 via-rose-600 to-amber-500 text-white shadow-sm'
+              : 'text-red-400 bg-red-500/10'
+          }`}
+        >
+          <Bot className="w-3 h-3 text-red-400" />
+          <span>AI Bot</span>
         </button>
         <button
           onClick={() => setActiveTab('ffsettings')}

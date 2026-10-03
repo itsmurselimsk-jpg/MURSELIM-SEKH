@@ -19,6 +19,7 @@ import { Navbar, NavTabType } from './components/Navbar';
 import { DeviceSelector } from './components/DeviceSelector';
 import { SensiResultsCard } from './components/SensiResultsCard';
 import { HeadshotLock90Engine } from './components/HeadshotLock90Engine';
+import { AiGameplaySensiBot } from './components/AiGameplaySensiBot';
 import { FreeFireSettingsSimulator } from './components/FreeFireSettingsSimulator';
 import { VipHeadshotPanel } from './components/VipHeadshotPanel';
 import { FloatingVipWidget } from './components/FloatingVipWidget';
@@ -465,6 +466,47 @@ export default function App() {
           </div>
         )}
 
+        {activeTab === 'aibot' && (
+          <div className="space-y-6">
+            <DeviceSelector
+              brand={brand}
+              setBrand={setBrand}
+              model={model}
+              setModel={setModel}
+              ram={ram}
+              setRam={setRam}
+              refreshRate={refreshRate}
+              setRefreshRate={setRefreshRate}
+              touchSampling={touchSampling}
+              setTouchSampling={setTouchSampling}
+              screenSize={screenSize}
+              setScreenSize={setScreenSize}
+              playstyle={playstyle}
+              setPlaystyle={setPlaystyle}
+              grip={grip}
+              setGrip={setGrip}
+            />
+
+            <AiGameplaySensiBot
+              brand={brand}
+              model={model}
+              ram={ram}
+              refreshRate={refreshRate}
+              touchSampling={touchSampling}
+              screenSize={screenSize}
+              playstyle={playstyle}
+              grip={grip}
+              scale={scale}
+              onApplySensi={(newSensi, fireSize) => {
+                setCurrentSensi(newSensi);
+                showToast('⚡ AI Bot Sensi Injected to App!');
+              }}
+              onOpenTrainer={() => setActiveTab('trainer')}
+              onShowToast={showToast}
+            />
+          </div>
+        )}
+
         {activeTab === 'ffsettings' && (
           <div className="space-y-6">
             <DeviceSelector
@@ -554,6 +596,25 @@ export default function App() {
               setPlaystyle={setPlaystyle}
               grip={grip}
               setGrip={setGrip}
+            />
+
+            {/* AI BOT GAMEPLAY & SENSI GENERATION MODEL */}
+            <AiGameplaySensiBot
+              brand={brand}
+              model={model}
+              ram={ram}
+              refreshRate={refreshRate}
+              touchSampling={touchSampling}
+              screenSize={screenSize}
+              playstyle={playstyle}
+              grip={grip}
+              scale={scale}
+              onApplySensi={(newSensi, fireSize) => {
+                setCurrentSensi(newSensi);
+                showToast('⚡ AI Bot Sensi Injected to App!');
+              }}
+              onOpenTrainer={() => setActiveTab('trainer')}
+              onShowToast={showToast}
             />
 
             {/* 90% Headshot Lock Feature Banner & Engine */}
